@@ -1,0 +1,17 @@
+#!/bin/sh
+. "$(dirname "$0")/_/husky.sh"
+
+if ! pnpm run lint; then
+  echo "Code format issues detected."
+
+  if pnpm run format; then
+    echo "Formatting successful. Staging changes..."
+    git add --all
+    git commit --amend --no-edit
+  else
+    echo "Formatting failed. Please check your code and configuration."
+    exit 1
+  fi
+else
+  echo "Code is already well formatted. No formatting needed."
+fi
