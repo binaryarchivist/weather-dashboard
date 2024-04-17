@@ -1,4 +1,5 @@
-import React, { createContext, useContext, useState, ReactNode } from 'react';
+import React, { createContext, useContext } from 'react';
+import { createTheme, ThemeOptions, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
 
 interface ThemeContextType {
   theme: string;
@@ -7,19 +8,11 @@ interface ThemeContextType {
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
 
-interface ThemeProviderProps {
-  children: ReactNode;
-}
-
-// src/theme.ts
-import { createTheme, ThemeOptions, ThemeProvider as MUIThemeProvider } from '@mui/material/styles';
-
 const getDesignTokens = (mode: 'light' | 'dark'): ThemeOptions => ({
   palette: {
     mode,
     ...(mode === 'light'
       ? {
-          // light theme colors
           background: {
             default: '#ffffff',
             paper: '#f7f6f3',
@@ -29,7 +22,6 @@ const getDesignTokens = (mode: 'light' | 'dark'): ThemeOptions => ({
           },
         }
       : {
-          // dark theme colors
           background: {
             default: '#121212',
             paper: '#1d1d1d',
