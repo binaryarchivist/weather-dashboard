@@ -1,7 +1,12 @@
 import React from 'react';
+import { Toggle } from '../../components/toggle';
 
 const Dashboard: React.FC = () => {
-  return <div>Home Page</div>;
+  return (
+    <div>
+      <Toggle />
+    </div>
+  );
 };
 
 export default Dashboard;

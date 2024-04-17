@@ -1,9 +1,9 @@
 import React from 'react';
 import Button from '@mui/material/Button';
-import { useTheme } from '../../context/theme/ThemeContext';
+import { useAppTheme } from '../../context/theme/ThemeContext';
 
 const ThemeToggle: React.FC = () => {
-  const { toggleTheme } = useTheme();
+  const { toggleTheme } = useAppTheme();
 
   return (
     <Button variant="contained" color="primary" onClick={toggleTheme}>
