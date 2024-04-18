@@ -1,4 +1,6 @@
+import { Theme } from '../../utils/constants';
+
 export interface ThemeContextType {
-  theme: 'light' | 'dark';
+  theme: Theme;
   toggleTheme: () => void;
 }

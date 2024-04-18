@@ -1,9 +1,14 @@
 module.exports = {
   mode: 'jit',
   purge: ['./src/**/*.{js,jsx,ts,tsx}', './public/index.html'],
-  darkMode: false,
+  darkMode: 'class',
   theme: {
-    extend: {},
+    extend: {
+      colors: {
+        'custom-light': '#ffffff',
+        'custom-dark': '#121212',
+      },
+    },
   },
   variants: {
     extend: {},
