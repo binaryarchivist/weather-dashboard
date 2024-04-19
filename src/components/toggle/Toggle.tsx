@@ -1,9 +1,13 @@
 import React from 'react';
+
 import { IconButton } from '@mui/material';
+import { styled } from '@mui/material/styles';
 import DarkIcon from '@mui/icons-material/Brightness7';
 import LightIcon from '@mui/icons-material/Brightness4';
+
 import { useAppTheme } from '../../context/theme/ThemeContext';
-import { styled } from '@mui/material/styles';
+
+import { Theme } from '../../utils/constants';
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
   transition: 'transform 0.3s ease-in-out, color 0.3s ease-in-out',
@@ -18,7 +22,7 @@ const ThemeToggle: React.FC = () => {
 
   return (
     <StyledIconButton onClick={toggleTheme} aria-label="Toggle theme" color="default">
-      {theme === 'dark' ? <DarkIcon /> : <LightIcon />}
+      {theme === Theme.DARK ? <DarkIcon /> : <LightIcon />}
     </StyledIconButton>
   );
 };

@@ -1,7 +1,7 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
 import { makePath } from '../../utils/functions';
 
-interface CustomAxiosRequest extends AxiosRequestConfig {
+interface ICustomAxiosRequest extends AxiosRequestConfig {
   endpoint: string;
 }
 
@@ -19,7 +19,7 @@ class AxiosFacade {
     this.axiosInstance.interceptors.response.use(onFulfilled, onRejected);
   }
 
-  request = async <T>(config: CustomAxiosRequest): Promise<T> => {
+  request = async <T>(config: ICustomAxiosRequest): Promise<T> => {
     try {
       console.log(makePath('https://', process.env.REACT_APP_BASE_URL, config.endpoint));
       const response: AxiosResponse<T> = await this.axiosInstance({

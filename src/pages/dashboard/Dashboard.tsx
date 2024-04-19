@@ -16,7 +16,7 @@ const Dashboard: React.FC = () => {
   const axios = useAxios();
 
   const handleOnSearch = useCallback(
-    async (city: string) => {
+    async (city: string): Promise<void> => {
       try {
         const response: IWeatherInformation = await axios.request<IWeatherInformation>({
           method: 'GET',

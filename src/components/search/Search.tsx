@@ -5,14 +5,14 @@ import { ISearchProps } from './Search.types';
 const SearchBar: React.FC<ISearchProps> = ({ onSearch }) => {
   const [city, setCity] = useState<string>('');
 
-  const handleSearch = useCallback(() => {
+  const handleSearch = useCallback((): void => {
     if (city) {
       onSearch(city);
     }
   }, [city, onSearch]);
 
   const handleKeyPress = useCallback(
-    (event: React.KeyboardEvent) => {
+    (event: React.KeyboardEvent): void => {
       if (event.key === 'Enter' && city) {
         handleSearch();
       }
