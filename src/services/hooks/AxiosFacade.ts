@@ -1,7 +1,13 @@
 import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
+import { makePath } from '../../utils/functions';
+
+interface CustomAxiosRequest extends AxiosRequestConfig {
+  endpoint: string;
+}
 
 class AxiosFacade {
   axiosInstance;
+
   constructor(options: AxiosRequestConfig = {}) {
     this.axiosInstance = axios.create(options);
   }
@@ -13,9 +19,13 @@ class AxiosFacade {
     this.axiosInstance.interceptors.response.use(onFulfilled, onRejected);
   }
 
-  request = async <T>(config: AxiosRequestConfig): Promise<T> => {
+  request = async <T>(config: CustomAxiosRequest): Promise<T> => {
     try {
-      const response: AxiosResponse<T> = await this.axiosInstance({ ...config });
+      console.log(makePath('https://', process.env.REACT_APP_BASE_URL, config.endpoint));
+      const response: AxiosResponse<T> = await this.axiosInstance({
+        url: makePath('https://', process.env.REACT_APP_BASE_URL, config.endpoint),
+        ...config,
+      });
       return response?.data;
     } catch (error) {
       throw new Error(error as any);
