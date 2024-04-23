@@ -22,12 +22,12 @@ const Dashboard: React.FC = () => {
           method: 'GET',
           endpoint: Endpoint.CURRENT_WEATHER,
           params: {
-            key: process.env.REACT_APP_API_KEY,
+            key: process.env.REACT_APP_WEATHER_API_KEY,
             q: city,
+            aqi: 'yes',
           },
         });
 
-        console.log('response: ', response);
         setWeatherInformation(response);
       } catch (e) {
         console.error(e);

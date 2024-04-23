@@ -21,9 +21,8 @@ class AxiosFacade {
 
   request = async <T>(config: ICustomAxiosRequest): Promise<T> => {
     try {
-      console.log(makePath('https://', process.env.REACT_APP_BASE_URL, config.endpoint));
       const response: AxiosResponse<T> = await this.axiosInstance({
-        url: makePath('https://', process.env.REACT_APP_BASE_URL, config.endpoint),
+        url: makePath('https://', process.env.REACT_APP_API_PATH, config.endpoint),
         ...config,
       });
       return response?.data;
