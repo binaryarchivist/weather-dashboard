@@ -1,3 +1,3 @@
 export interface IWeatherInformation {
-  city: string;
+  [key: string]: any;
 }

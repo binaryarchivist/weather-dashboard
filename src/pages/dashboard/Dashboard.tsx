@@ -1,8 +1,9 @@
 import React, { useCallback, useState } from 'react';
-import { Box, useTheme } from '@mui/material';
+import { Box, Grid, useTheme } from '@mui/material';
 
 import { Toggle } from '../../components/toggle';
 import SearchBar from '../../components/search/Search';
+import { Card, ForecastCard } from '../../components/card';
 
 import useAxios from '../../services/hooks/useAxios';
 
@@ -10,7 +11,7 @@ import { IWeatherInformation } from './Dashboard.types';
 import { Endpoint } from '../../utils/constants';
 
 const Dashboard: React.FC = () => {
-  const [weatherInformation, setWeatherInformation] = useState<IWeatherInformation>();
+  const [weatherForecast, setWeatherForecast] = useState<IWeatherInformation>();
 
   const theme = useTheme();
   const axios = useAxios();
@@ -18,17 +19,17 @@ const Dashboard: React.FC = () => {
   const handleOnSearch = useCallback(
     async (city: string): Promise<void> => {
       try {
-        const response: IWeatherInformation = await axios.request<IWeatherInformation>({
+        const weatherForecast: IWeatherInformation = await axios.request<IWeatherInformation>({
           method: 'GET',
-          endpoint: Endpoint.CURRENT_WEATHER,
+          endpoint: Endpoint.FORECAST,
           params: {
             key: process.env.REACT_APP_WEATHER_API_KEY,
             q: city,
-            aqi: 'yes',
+            days: 10,
           },
         });
 
-        setWeatherInformation(response);
+        setWeatherForecast(weatherForecast);
       } catch (e) {
         console.error(e);
       }
@@ -54,10 +55,18 @@ const Dashboard: React.FC = () => {
           <div className="flex-grow flex-basis-0">
             <SearchBar onSearch={handleOnSearch} />
           </div>
-          <div className="flex-grow-0 flex-shrink">
-            <Toggle />
-          </div>
         </div>
+      </div>
+      <div className="flex flex-col gap-5">
+        <Card title="10 Day Weather forecast">
+          <Grid container spacing={2}>
+            {weatherForecast?.forecast?.forecastday?.map((day: any, index: number) => (
+              <Grid item xs={12} sm={6} md={2} key={day.date}>
+                <ForecastCard forecast={day} index={index} />
+              </Grid>
+            ))}
+          </Grid>
+        </Card>
       </div>
     </Box>
   );
