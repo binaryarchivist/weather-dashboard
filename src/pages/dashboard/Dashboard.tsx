@@ -27,6 +27,9 @@ const Dashboard: React.FC = () => {
             q: city,
             days: 10,
           },
+          headers: {
+            'Content-Type': 'application/json',
+          },
         });
 
         setWeatherForecast(weatherForecast);
