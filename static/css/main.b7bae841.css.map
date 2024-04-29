@@ -1,0 +1,1 @@
+{"version":3,"file":"static/css/main.b7bae841.css","mappings":"AAAA,EACE,sBAEF,UAEE,YAGF;;CAAA,66IACA,qSACA","sources":["index.scss"],"sourcesContent":["* {\n  box-sizing: border-box;\n}\nhtml,\nbody {\n  height: 100%;\n}\n\n@tailwind base;\n@tailwind components;\n@tailwind utilities;\n"],"names":[],"sourceRoot":""}
