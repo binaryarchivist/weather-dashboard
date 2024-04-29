@@ -22,7 +22,7 @@ class AxiosFacade {
   request = async <T>(config: ICustomAxiosRequest): Promise<T> => {
     try {
       const response: AxiosResponse<T> = await this.axiosInstance({
-        url: `https://${process.env.REACT_APP_API_PATH}/${config.endpoint}`,
+        url: process.env.REACT_APP_API_PATH,
         ...config,
       });
       return response?.data;
