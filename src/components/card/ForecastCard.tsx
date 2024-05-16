@@ -15,6 +15,7 @@ import {
 const ForecastCard: React.FC<any> = ({ forecast, index }) => {
   const [anchorEl, setAnchorEl] = useState(null);
 
+  console.log(forecast);
   const handleOpenPopover = useCallback((event: any) => {
     setAnchorEl(event.currentTarget);
   }, []);

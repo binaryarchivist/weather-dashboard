@@ -12,21 +12,16 @@ class AxiosFacade {
     this.axiosInstance = axios.create(options);
   }
 
-  setResponseInterceptor(
-    onFulfilled?: (value: AxiosResponse<any>) => AxiosResponse<any> | Promise<AxiosResponse<any>>,
-    onRejected?: (error: AxiosError) => any,
-  ) {
-    this.axiosInstance.interceptors.response.use(onFulfilled, onRejected);
-  }
-
-  request = async <T>(config: ICustomAxiosRequest): Promise<T> => {
+  request = async <T>(config: AxiosRequestConfig): Promise<T> => {
     try {
+      console.log(config);
       const response: AxiosResponse<T> = await this.axiosInstance({
         url: process.env.REACT_APP_API_PATH,
         ...config,
       });
       return response?.data;
     } catch (error) {
+      console.error(error);
       throw new Error(error as any);
     }
   };

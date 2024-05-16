@@ -46,5 +46,5 @@ export const getDesignTokens = (mode: Theme): ThemeOptions => ({
 
 export enum Endpoint {
   CURRENT_WEATHER = 'current.json',
-  FORECAST = 'forecast.json',
+  FORECAST = 'weather',
 }
