@@ -1,8 +1,7 @@
-import axios, { AxiosError, AxiosRequestConfig, AxiosResponse } from 'axios';
-import { makePath } from '../../utils/functions';
+import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 
 interface ICustomAxiosRequest extends AxiosRequestConfig {
-  endpoint: string;
+  endpoint?: string;
 }
 
 class AxiosFacade {
@@ -12,11 +11,11 @@ class AxiosFacade {
     this.axiosInstance = axios.create(options);
   }
 
-  request = async <T>(config: AxiosRequestConfig): Promise<T> => {
+  request = async <T>(config: ICustomAxiosRequest): Promise<T> => {
     try {
       console.log(config);
       const response: AxiosResponse<T> = await this.axiosInstance({
-        url: process.env.REACT_APP_API_PATH,
+        url: `${process.env.REACT_APP_API_PATH}/${config.endpoint}`,
         ...config,
       });
       return response?.data;

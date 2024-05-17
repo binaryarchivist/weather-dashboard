@@ -8,13 +8,10 @@ import { Card, ForecastCard } from '../../components/card';
 import useAxios from '../../services/hooks/useAxios';
 
 import { IWeatherInformation } from './Dashboard.types';
-import { Endpoint } from '../../utils/constants';
-
-const token =
-  'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImR1bW15IiwicGVybWlzc2lvbnMiOlsiV1JJVEUiLCJSRUFEIl0sInJvbGUiOiJ1c2VyIiwiaWF0IjoxNzE1ODc5NDA2LCJleHAiOjE3MTU4ODMwMDZ9.BSQnNvew-GwYvyoi8Vc1QGygCtZAFnWqYAAqPXRPk1Y';
 
 const Dashboard: React.FC = () => {
   const [weatherForecast, setWeatherForecast] = useState<IWeatherInformation>();
+  const [jwtToken, setJwtToken] = useState<any>('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(0);
 
@@ -26,12 +23,12 @@ const Dashboard: React.FC = () => {
       try {
         const weatherForecast: IWeatherInformation = await axios.request<IWeatherInformation>({
           method: 'GET',
-          // endpoint: Endpoint.FORECAST,
+          endpoint: 'weather',
           params: {},
           headers: {
             'Content-Type': 'application/json',
             Accept: '*/*',
-            Authorization: `Bearer ${token}`,
+            Authorization: `Bearer ${jwtToken}`,
           },
         });
 
@@ -40,17 +37,35 @@ const Dashboard: React.FC = () => {
         console.error(e);
       }
     },
-    [axios],
+    [axios, jwtToken],
   );
+
+  const getToken = useCallback(async () => {
+    try {
+      const response: any = await axios.request({
+        method: 'POST',
+        endpoint: 'auth/token',
+        data: {
+          username: 'dummy',
+          permissions: ['WRITE', 'READ'],
+          role: 'user',
+        },
+      });
+      console.log(response);
+      setJwtToken(response.token);
+    } catch (e) {
+      console.error(e);
+    }
+  }, []);
 
   const fetchWeatherData = useCallback(
     async (pageCursor: string) => {
       try {
         const response: any = await axios.request({
           method: 'GET',
-          // endpoint: Endpoint.FORECAST,
+          endpoint: 'weather',
           params: { cursor: pageCursor },
-          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${token}` },
+          headers: { 'Content-Type': 'application/json', Authorization: `Bearer ${jwtToken}` },
         });
         setWeatherForecast((prev) => ({
           data: [...prev?.data, ...response?.data],
@@ -60,7 +75,7 @@ const Dashboard: React.FC = () => {
         console.error(e);
       }
     },
-    [axios],
+    [axios, jwtToken],
   );
 
   const handleNextPage = useCallback(async () => {
@@ -95,6 +110,9 @@ const Dashboard: React.FC = () => {
           <div className="flex-grow flex-basis-0">
             <SearchBar onSearch={handleOnSearch} />
           </div>
+          <Button onClick={getToken} variant="outlined" color="primary" size="small">
+            Get Token
+          </Button>
         </div>
       </div>
       <div className="flex flex-col gap-5">
