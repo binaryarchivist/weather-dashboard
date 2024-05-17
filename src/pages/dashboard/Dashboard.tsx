@@ -51,7 +51,6 @@ const Dashboard: React.FC = () => {
           role: 'user',
         },
       });
-      console.log(response);
       setJwtToken(response.token);
     } catch (e) {
       console.error(e);
